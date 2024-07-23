@@ -1,4 +1,4 @@
-#!/bin/usr/env python3
+#!/usr/bin/env python3
 '''task 0 '''
 from base_caching import BaseCaching
 
