@@ -5,7 +5,7 @@ from base_caching import BaseCaching
 
 class BasicCache(BaseCaching):
     '''inherts from Base_Caching'''
-    
+
     def put(self, key, item):
         '''assign value'''
         if key is None and item is None:
