@@ -5,8 +5,6 @@ from base_caching import BaseCaching
 
 class BasicCache(BaseCaching):
     '''inherts from Base_Caching'''
-    MAX_LIMIT = None
-    
     
     def put(self, key, item):
         '''assign value'''
