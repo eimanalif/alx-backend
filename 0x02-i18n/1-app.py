@@ -11,10 +11,12 @@ class config:
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
+
 app.config.from_object(config)
 app.url_map.strict_slashes = False
 
 babel = Babel(app)
+
 
 @app.route('/')
 def get_index():
