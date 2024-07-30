@@ -34,14 +34,15 @@ def get_user() -> Union[Dict, None]:
 
 @app.before_request
 def before_request() -> None:
-    """Performs some routines before each request's resolution"""
+    """Performs some routines before each request's resolution.
+    """
     user = get_user()
     g.user = user
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Retrieves locale for web page """
+    """Retrieves locale for web page"""
     locale = request.args.get('locale', '')
     if locale in app.config["LANGUAGES"]:
         return locale
@@ -55,7 +56,7 @@ def get_locale() -> str:
 
 @app.route('/')
 def get_index() -> str:
-    """index page """
+    """index page"""
     return render_template('6-index.html')
 
 
