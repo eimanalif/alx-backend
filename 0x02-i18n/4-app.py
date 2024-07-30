@@ -1,39 +1,44 @@
 #!/usr/bin/env python3
-"""Basic Flask app with internationalization support"""
+"""
+A Basic Flask application for internationalization (i18n) using Flask-Babel.
+"""
+from flask import Flask, request, render_template
 from flask_babel import Babel
-from flask import Flask, render_template, request
 
 
-class Config:
-    """Represents Flask Babel configuration"""
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
+class AppConfig:
+    """
+    Application configuration class.
+    """
+    SUPPORTED_LANGUAGES = ['en', 'fr']
+    DEFAULT_LANGUAGE = 'en'
+    DEFAULT_TIMEZONE = 'UTC'
 
 
 app = Flask(__name__)
-app.config.from_object(Config)
-app.url_map.strict_slashes = False
+app.config.from_object(AppConfig)
+
 babel = Babel(app)
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Retrieves locale for web page"""
-    queries = request.query_string.decode('utf-8').split('&')
-    query_table = dict(map(
-        lambda x: (x if '=' in x else '{}='.format(x)).split('='),
-        queries,
-    ))
-    if 'locale' in query_table:
-        if query_table['locale'] in app.config["LANGUAGES"]:
-            return query_table['locale']
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    """
+    Get the locale from the request object or accept header.
+    """
+    locale = request.args.get('locale', '').strip()
+    if locale and locale in app.config['SUPPORTED_LANGUAGES']:
+        return locale
+    return request.accept_languages.best_match(
+        app.config['SUPPORTED_LANGUAGES']
+    )
 
 
-@app.route('/')
-def get_index() -> str:
-    """index page"""
+@app.route('/', strict_slashes=False)
+def display_index() -> str:
+    """
+    Render a basic HTML template.
+    """
     return render_template('4-index.html')
 
 
