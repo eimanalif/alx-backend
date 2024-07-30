@@ -2,7 +2,7 @@
 """ Basic Flask app with internationalization support"""
 from flask_babel import Babel
 from typing import Union, Dict
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request
 
 
 class Config:

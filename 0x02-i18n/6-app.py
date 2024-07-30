@@ -34,8 +34,7 @@ def get_user() -> Union[Dict, None]:
 
 @app.before_request
 def before_request() -> None:
-    """Performs some routines before each request's resolution.
-    """
+    """Performs some routines before each request's resolution"""
     user = get_user()
     g.user = user
 
