@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+''' basic flask app'''
 from flask import Flask
 from flask_babel import Babel
 
@@ -15,6 +17,7 @@ babel = Babel(app)
 
 @app.route('/')
 def index():
+    '''index page'''
     return "Hello, World!"
 
 
