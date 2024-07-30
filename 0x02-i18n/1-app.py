@@ -14,9 +14,9 @@ app.config.from_object(config)
 babel = Babel(app)
 
 @app.route('/')
-def index()
+def index():
     return "Hello, World!"
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app.run(debug=True)
