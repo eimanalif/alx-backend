@@ -20,7 +20,7 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale() -> str:
     """Retrieves locale for web page"""
-    return request.args.get('lang', 'en')  
+    return request.args.get('lang', 'en')
 
 
 @app.route('/')
