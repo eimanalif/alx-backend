@@ -21,15 +21,21 @@ def get_user():
         return users.get(user_id)
     return None
 
+def set_locale():
+    # Priority: URL parameter -> user setting -> request header -> default locale
+    url_locale = request.args.get('lang')
+    if url_locale:
+        return url_locale
+    
+    if g.user and g.user.get('locale'):
+        return g.user.get('locale')
+    
+    return request.accept_languages.best_match(['en', 'fr']) or 'en'
+
 @app.before_request
 def before_request():
     g.user = get_user()
-
-@babel.localeselector
-def get_locale():
-    if g.user:
-        return g.user.get('locale') or 'en'
-    return request.args.get('lang') or 'en'
+    g.locale = set_locale()  # Set the locale globally
 
 @app.route('/')
 def index():
