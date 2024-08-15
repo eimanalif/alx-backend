@@ -21,6 +21,10 @@ def get_user():
         return users.get(user_id)
     return None
 
+@app.before_request
+def before_request():
+    g.user = get_user()
+
 def set_locale():
     # Priority: URL parameter -> user setting -> request header -> default locale
     url_locale = request.args.get('lang')
@@ -32,14 +36,11 @@ def set_locale():
     
     return request.accept_languages.best_match(['en', 'fr']) or 'en'
 
-@app.before_request
-def before_request():
-    g.user = get_user()
-    g.locale = set_locale()  # Set the locale globally
-
 @app.route('/')
 def index():
+    g.locale = set_locale()  # Set the locale globally
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
+
